@@ -8,6 +8,11 @@ interface Balance {
   total: number;
 }
 
+interface Statement {
+  transactions: Transaction[];
+  balance: Balance;
+}
+
 @EntityRepository(Transaction)
 class TransactionsRepository extends Repository<Transaction> {
   public async getBalance(): Promise<Balance> {
@@ -35,6 +40,13 @@ class TransactionsRepository extends Repository<Transaction> {
     };
 
     return balance;
+  }
+
+  public async getStatement(): Promise<Statement> {
+    return {
+      transactions: await this.find(),
+      balance: await this.getBalance(),
+    };
   }
 }
 

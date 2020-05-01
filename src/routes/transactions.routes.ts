@@ -9,7 +9,8 @@ import TransactionsRepository from '../repositories/TransactionsRepository';
 const transactionsRouter = Router();
 
 transactionsRouter.get('/', async (request, response) => {
-  // TODO
+  const transactionsRepository = getCustomRepository(TransactionsRepository);
+  return response.json(await transactionsRepository.getStatement());
 });
 
 transactionsRouter.post('/', async (request, response) => {
