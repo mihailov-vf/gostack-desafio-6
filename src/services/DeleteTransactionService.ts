@@ -1,8 +1,24 @@
-// import AppError from '../errors/AppError';
+import AppError from '../errors/AppError';
+
+import TransactionsRepository from '../repositories/TransactionsRepository';
+
+interface Request {
+  id: string;
+}
 
 class DeleteTransactionService {
-  public async execute(): Promise<void> {
-    // TODO
+  private transactionsRepository: TransactionsRepository;
+
+  constructor(transactionsRepository: TransactionsRepository) {
+    this.transactionsRepository = transactionsRepository;
+  }
+
+  public async execute({ id }: Request): Promise<void> {
+    if (!(await this.transactionsRepository.count({ where: { id } }))) {
+      throw new AppError('Transaction not found');
+    }
+
+    await this.transactionsRepository.delete(id);
   }
 }
 
