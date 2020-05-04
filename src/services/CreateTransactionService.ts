@@ -60,9 +60,7 @@ class CreateTransactionService {
       category,
     });
 
-    this.transactionsRepository.save(transaction);
-
-    return transaction;
+    return this.transactionsRepository.save(transaction);
   }
 }
 
